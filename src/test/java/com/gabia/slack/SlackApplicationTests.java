@@ -1,13 +1,12 @@
 package com.gabia.slack;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 class SlackApplicationTests {
 
     @Test
     void contextLoads() {
+        SlackApplication.main(new String[]{});
     }
 
 }
