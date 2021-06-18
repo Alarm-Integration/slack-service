@@ -11,8 +11,8 @@ variables:
 build:
   stage: build
   script:
-    - echo $DOCKER_HUB_ID
     - docker login -u $DOCKER_HUB_ID -p $DOCKER_HUB_PASSWORD
+    - echo $DOCKER_HUB_ID/$IMAGE_NAME
     - docker build -t $DOCKER_HUB_ID/$IMAGE_NAME .
     - docker push $DOCKER_HUB_ID/$IMAGE_NAME
   environment:
