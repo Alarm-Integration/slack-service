@@ -1,16 +1,16 @@
 server:
-  port: 8080
+  port: 30001
 
-#spring:
-#  application:
-#    name: slack-service
-#eureka:
-#  instance:
-#    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: slack-service
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
 
 kafka:
   bootstrap:
-    servers: kafka-service:9092
+    servers: 139.150.75.240:9092
