@@ -19,7 +19,7 @@ public class SlackService {
         this.client = Slack.getInstance().methods();
     }
 
-    @KafkaListener(topics = "slack", groupId = "slack")
+    @KafkaListener(topics = "slack", groupId = "slack", containerFactory = "consumerListener")
     public List<ChatPostMessageResponse> sendMessageToSlack(SendSlackRequest sendSlackRequest) throws Exception {
         List<ChatPostMessageResponse> responses = new ArrayList<>();
 

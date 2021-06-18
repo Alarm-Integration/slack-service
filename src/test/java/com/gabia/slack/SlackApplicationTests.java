@@ -6,7 +6,7 @@ class SlackApplicationTests {
 
     @Test
     void contextLoads() {
-        SlackApplication.main(new String[]{});
+//        SlackApplication.main(new String[]{});
     }
 
 }
