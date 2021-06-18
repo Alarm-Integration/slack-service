@@ -9,7 +9,7 @@ eureka:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
   client:
     serviceUrl:
-      defaultZone: http://discovery-service:8761/eureka/
+      defaultZone: http://139.150.75.239:8761/eureka/
 
 kafka:
   bootstrap:
