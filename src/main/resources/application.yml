@@ -1,2 +1,16 @@
 server:
   port: 8080
+
+spring:
+  application:
+    name: slack-service
+
+kafka:
+  bootstrap:
+    servers: 139.150.75.240:9092
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh
