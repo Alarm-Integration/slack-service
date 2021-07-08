@@ -32,6 +32,13 @@ dependencies {
     implementation("com.slack.api:bolt-servlet:1.8.1")
     implementation("com.slack.api:bolt-jetty:1.8.1")
 
+    // Kafka, deserialize
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    // config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
