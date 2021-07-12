@@ -10,7 +10,7 @@ variables:
   CONTAINER_NAME: slack-service
 
 test:
-  image: gradle:6.9.0-jdk11
+  image: gradle:7.1-jdk11
   stage: test
   script:
     - gradle test
@@ -30,7 +30,7 @@ coverage:
       cobertura: build/cobertura.xml
 
 build:
-  image: gradle:6.9.0-jdk11
+  image: gradle:7.1-jdk11
   stage: build
   script:
     - gradle build -x test
