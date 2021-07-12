@@ -4,7 +4,8 @@ server:
 eureka:
   instance:
     prefer-ip-address: true
-    ip-address: "${HOST_IP}"
+    ip-address: 139.150.75.239
+
 spring:
   application:
     name: slack-service
