@@ -5,6 +5,10 @@ spring:
   application:
     name: slack-service
 
+kafka:
+  bootstrap:
+    servers: 10.7.27.17:9092
+
 management:
   endpoints:
     web:
