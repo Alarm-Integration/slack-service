@@ -4,7 +4,7 @@ server:
 eureka:
   instance:
     prefer-ip-address: true
-    ip-address: 139.150.75.239
+    ip-address: "${HOST_IP}"
 
 spring:
   application:

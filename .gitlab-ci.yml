@@ -10,10 +10,14 @@ stages:
 variables:
   CONTAINER_NAME: slack-service
 
+before_script:
+  - echo $HOST_IP
+
 test:
   image: gradle:6.9.0-jdk11
   stage: test
   script:
+    - echo $HOST_IP
     - gradle test
   artifacts:
     paths:
