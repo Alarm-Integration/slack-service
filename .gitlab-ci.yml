@@ -44,6 +44,7 @@ build:
       - build/libs/*.jar
 
 build-docker-image:
+  needs: ["build"]
   stage: build
   cache:
     key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
