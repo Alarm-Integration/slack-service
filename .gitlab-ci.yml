@@ -55,8 +55,36 @@ build-docker-image:
     - docker build -t $DOCKER_HUB_ID/$IMAGE_NAME .
     - docker push $DOCKER_HUB_ID/$IMAGE_NAME
 
-deploy:
+g238_deploy:
   stage: deploy
+  tags:
+    - g238
+  script:
+    - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
+    - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
+    - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
+    --name $CONTAINER_NAME \
+    -e HOST_IP=$HOST_IP \
+    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
+    $DOCKER_HUB_ID/$IMAGE_NAME"
+
+g239_deploy:
+  stage: deploy
+  tags:
+    - g239
+  script:
+    - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
+    - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
+    - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
+    --name $CONTAINER_NAME \
+    -e HOST_IP=$HOST_IP \
+    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
+    $DOCKER_HUB_ID/$IMAGE_NAME"
+
+g240_deploy:
+  stage: deploy
+  tags:
+    - g240
   script:
     - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
