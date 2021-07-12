@@ -4,6 +4,7 @@ stages:
   - test
   - visualize
   - build
+  - package
   - deploy
 
 variables:
@@ -32,7 +33,6 @@ coverage:
 build:
   image: gradle:6.9.0-jdk11
   stage: build
-  parallel: 1
   script:
     - gradle build -x test
   artifacts:
@@ -44,9 +44,8 @@ build:
     paths:
       - build/libs/*.jar
 
-build-docker-image:
-  stage: build
-  parallel: 1
+package-docker-image:
+  stage: package
   cache:
     key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
     policy: pull
