@@ -32,6 +32,7 @@ coverage:
 build:
   image: gradle:6.9.0-jdk11
   stage: build
+  parallel: 1
   script:
     - gradle build -x test
   artifacts:
@@ -44,8 +45,8 @@ build:
       - build/libs/*.jar
 
 build-docker-image:
-  needs: ["build"]
   stage: build
+  parallel: 1
   cache:
     key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
     policy: pull
