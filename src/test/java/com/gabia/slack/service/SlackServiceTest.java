@@ -56,10 +56,10 @@ class SlackServiceTest {
     void 슬랙_알람_발송_성공() {
 
         // given
-        List<String> raws = Arrays.asList("C023WJKCPUM");
+        List<String> receivers = Arrays.asList("C023WJKCPUM");
         AlarmMessage alarmMessage = AlarmMessage.builder()
                 .groupId(groupId)
-                .raws(raws)
+                .receivers(receivers)
                 .title(title)
                 .content(content)
                 .userId(userId)
@@ -71,12 +71,12 @@ class SlackServiceTest {
         Message message = new Message();
         message.setType("message");
         message.setText(alarmMessage.getContent());
-        response.setChannel(alarmMessage.getRaws().get(0));
+        response.setChannel(alarmMessage.getReceivers().get(0));
         response.setMessage(message);
         response.setOk(true);
 
         when(client.sendAlarm(accessToken,
-                alarmMessage.getRaws().get(0),
+                alarmMessage.getReceivers().get(0),
                 alarmMessage)
         ).thenReturn(response);
 
@@ -94,10 +94,10 @@ class SlackServiceTest {
     void 슬랙_알람_발송_비정상_토큰_실패() {
 
         // given
-        List<String> raws = Arrays.asList("C023WJKCPUM");
+        List<String> receivers = Arrays.asList("C023WJKCPUM");
         AlarmMessage alarmMessage = AlarmMessage.builder()
                 .groupId(groupId)
-                .raws(raws)
+                .receivers(receivers)
                 .title(title)
                 .content(content)
                 .userId(userId)
@@ -113,7 +113,7 @@ class SlackServiceTest {
         response.setOk(false);
 
         when(client.sendAlarm(accessToken,
-                alarmMessage.getRaws().get(0),
+                alarmMessage.getReceivers().get(0),
                 alarmMessage)
         ).thenReturn(response);
 
@@ -130,10 +130,10 @@ class SlackServiceTest {
     void 슬랙_알람_발송_존재하지_않는_채널_전송_실패() {
 
         // given
-        List<String> raws = Arrays.asList("IS NOT A CHANNEL ID");
+        List<String> receivers = Arrays.asList("IS NOT A CHANNEL ID");
         AlarmMessage alarmMessage = AlarmMessage.builder()
                 .groupId(groupId)
-                .raws(raws)
+                .receivers(receivers)
                 .title(title)
                 .content(content)
                 .userId(userId)
@@ -149,7 +149,7 @@ class SlackServiceTest {
         response.setOk(false);
 
         when(client.sendAlarm(accessToken,
-                alarmMessage.getRaws().get(0),
+                alarmMessage.getReceivers().get(0),
                 alarmMessage)
         ).thenReturn(response);
 

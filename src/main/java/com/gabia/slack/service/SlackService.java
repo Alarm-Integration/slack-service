@@ -21,7 +21,7 @@ public class SlackService {
     public void sendSlack(AlarmMessage alarmMessage) {
         String accessToken = getAccessToken(alarmMessage.getGroupId());
 
-        for (String channelId : alarmMessage.getRaws()) {
+        for (String channelId : alarmMessage.getReceivers()) {
             ChatPostMessageResponse response = client.sendAlarm(accessToken, channelId, alarmMessage);
 
             if (response.isOk()) {
