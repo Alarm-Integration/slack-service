@@ -10,14 +10,10 @@ stages:
 variables:
   CONTAINER_NAME: slack-service
 
-before_script:
-  - echo $HOST_IP
-
 test:
   image: gradle:6.9.0-jdk11
   stage: test
   script:
-    - echo $HOST_IP
     - gradle test
   artifacts:
     paths:
@@ -69,7 +65,7 @@ g238_deploy:
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
     - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
     --name $CONTAINER_NAME \
-    -e HOST_IP=$HOST_IP \
+    -e HOST_IP=$HOST_238_IP \
     -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     $DOCKER_HUB_ID/$IMAGE_NAME"
 
@@ -82,7 +78,7 @@ g239_deploy:
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
     - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
     --name $CONTAINER_NAME \
-    -e HOST_IP=$HOST_IP \
+    -e HOST_IP=$HOST_239_IP \
     -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     $DOCKER_HUB_ID/$IMAGE_NAME"
 
@@ -95,6 +91,6 @@ g240_deploy:
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
     - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
     --name $CONTAINER_NAME \
-    -e HOST_IP=$HOST_IP \
+    -e HOST_IP=$HOST_240_IP \
     -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     $DOCKER_HUB_ID/$IMAGE_NAME"
