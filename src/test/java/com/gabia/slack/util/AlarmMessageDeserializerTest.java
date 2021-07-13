@@ -1,6 +1,8 @@
 package com.gabia.slack.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabia.slack.dto.request.AlarmMessage;
+import org.apache.kafka.common.serialization.Serializer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +10,23 @@ import java.util.Arrays;
 import java.util.List;
 
 class AlarmMessageDeserializerTest {
+
+    class AlarmMessageSerializer implements Serializer<Object> {
+
+        @Override
+        public byte[] serialize(String topic, Object message) {
+            byte[] data = null;
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                data = objectMapper.writeValueAsString(message).getBytes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return data;
+        }
+    }
+
+
     private Long groupId = 1L;
     private Long userId = 1L;
     private String title = "title";
