@@ -52,6 +52,17 @@ class SlackServiceTest {
         memoryAppender.start();
     }
 
+    /* Slack API 성공 요청 응답 결과
+    {
+        "ok": true,
+        "channel": "C023WJKCPUM",
+        "message": {
+            "type": "message",
+            "text": "Hello world :tada:",
+            ...
+        }
+    }
+     */
     @Test
     void 슬랙_알람_발송_성공() {
 
@@ -90,6 +101,13 @@ class SlackServiceTest {
 
     }
 
+    /* Slack API 유효하지 않은 토큰 요청 응답 결과
+    {
+        "ok": false,
+        "error": "invalid_auth",
+        ...
+    }
+     */
     @Test
     void 슬랙_알람_발송_비정상_토큰_실패() {
 
@@ -126,6 +144,13 @@ class SlackServiceTest {
                 "SlackService", alarmMessage.getUserId(), alarmMessage.getTraceId(), "슬랙 발송 실패", response.getError()), Level.INFO)).isFalse();
     }
 
+    /* Slack API 존재하지 않는 채널 요청 응답 결과
+    {
+        "ok": false,
+        "error": "channel_not_found",
+        ...
+    }
+    */
     @Test
     void 슬랙_알람_발송_존재하지_않는_채널_전송_실패() {
 
