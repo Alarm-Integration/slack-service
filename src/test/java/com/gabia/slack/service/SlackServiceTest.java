@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,7 +65,7 @@ class SlackServiceTest {
     }
      */
     @Test
-    void 슬랙_알람_발송_성공() {
+    void 슬랙_알람_발송_성공() throws IOException {
 
         // given
         List<String> receivers = Arrays.asList("C023WJKCPUM");
@@ -109,7 +110,7 @@ class SlackServiceTest {
     }
      */
     @Test
-    void 슬랙_알람_발송_비정상_토큰_실패() {
+    void 슬랙_알람_발송_비정상_토큰_실패() throws IOException {
 
         // given
         List<String> receivers = Arrays.asList("C023WJKCPUM");
@@ -152,7 +153,7 @@ class SlackServiceTest {
     }
     */
     @Test
-    void 슬랙_알람_발송_존재하지_않는_채널_전송_실패() {
+    void 슬랙_알람_발송_존재하지_않는_채널_전송_실패() throws IOException {
 
         // given
         List<String> receivers = Arrays.asList("IS NOT A CHANNEL ID");

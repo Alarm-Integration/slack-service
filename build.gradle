@@ -36,6 +36,10 @@ dependencies {
     // Kafka, deserialize
     implementation 'org.springframework.kafka:spring-kafka'
 
+    //fluentd
+    implementation "org.komamitsu:fluency-core:2.6.0"
+    implementation "org.komamitsu:fluency-fluentd:2.6.0"
+
     // config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
@@ -87,7 +91,7 @@ jacocoTestCoverageVerification {
                 minimum = 0.0
             }
 
-            excludes = ['com.gabia.slack.SlackApplication']
+            excludes = ['com.gabia.slack.SlackApplication', 'com.gabia.emailservice.util.LogSender']
         }
     }
 }

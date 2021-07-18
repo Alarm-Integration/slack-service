@@ -1,24 +1,27 @@
 package com.gabia.slack.service;
 
 import com.gabia.slack.dto.request.AlarmMessage;
+import com.gabia.slack.util.LogSender;
 import com.gabia.slack.util.SlackClient;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.komamitsu.fluency.fluentd.ingester.sender.FluentdSender;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SlackService {
 
-    private SlackClient client;
-
-    public SlackService() {
-        this.client = new SlackClient();
-    }
+    private final SlackClient client;
+    private final LogSender logSender;
 
     @KafkaListener(topics = "slack", groupId = "slack", containerFactory = "kafkaListenerContainerFactory")
-    public void sendSlack(AlarmMessage alarmMessage) {
+    public void sendSlack(AlarmMessage alarmMessage) throws IOException {
         String accessToken = getAccessToken(alarmMessage.getGroupId());
 
         for (String channelId : alarmMessage.getReceivers()) {
@@ -31,6 +34,8 @@ public class SlackService {
                         alarmMessage.getTraceId(),
                         "슬랙 발송 성공",
                         response.getMessage().getText());
+                logSender.send(alarmMessage.getUserId(), "slack", alarmMessage.getTraceId(), "슬랙 발송 성공");
+
             } else {
                 log.error("{}: userId:{} traceId:{} massage:{} error:{}",
                         getClass().getSimpleName(),
@@ -38,6 +43,7 @@ public class SlackService {
                         alarmMessage.getTraceId(),
                         "슬랙 발송 실패",
                         response.getError());
+                logSender.send(alarmMessage.getUserId(), "slack", alarmMessage.getTraceId(), "슬랙 발송 실패");
             }
         }
     }

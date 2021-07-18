@@ -5,9 +5,11 @@ import com.slack.api.Slack;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class SlackClient {
 
     public ChatPostMessageResponse sendAlarm(String accessToken, String channelId, AlarmMessage alarmMessage) {
