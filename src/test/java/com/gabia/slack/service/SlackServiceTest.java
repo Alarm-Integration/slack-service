@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import com.gabia.slack.dto.request.AlarmMessage;
+import com.gabia.slack.util.LogSender;
 import com.gabia.slack.util.MemoryAppender;
 import com.gabia.slack.util.SlackClient;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
@@ -28,11 +29,13 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-@SpringBootTest
 class SlackServiceTest {
 
     @Mock
     private SlackClient client;
+
+    @Mock
+    private LogSender logSender;
 
     @InjectMocks
     private SlackService service;
