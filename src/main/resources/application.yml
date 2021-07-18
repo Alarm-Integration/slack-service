@@ -1,2 +1,17 @@
 server:
-  port: 8080
+  port: 30010
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: "${HOST_IP}"
+
+spring:
+  application:
+    name: slack-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh
