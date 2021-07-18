@@ -44,7 +44,7 @@ class AlarmMessageDeserializerTest {
                 .userId(userId)
                 .groupId(groupId)
                 .traceId(traceId)
-                .receivers(receivers)
+                .addresses(receivers)
                 .title(title)
                 .content(content)
                 .build();
@@ -59,6 +59,6 @@ class AlarmMessageDeserializerTest {
         Assertions.assertThat(message1.getGroupId()).isEqualTo(message2.getGroupId());
         Assertions.assertThat(message1.getTraceId()).isEqualTo(message2.getTraceId());
         Assertions.assertThat(message1.getUserId()).isEqualTo(message2.getUserId());
-        Assertions.assertThat(message1.getReceivers().get(0)).isEqualTo(message2.getReceivers().get(0));
+        Assertions.assertThat(message1.getAddresses().get(0)).isEqualTo(message2.getAddresses().get(0));
     }
 }

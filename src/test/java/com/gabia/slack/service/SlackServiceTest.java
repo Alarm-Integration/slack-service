@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
+@SpringBootTest
 class SlackServiceTest {
 
     @Mock
@@ -71,7 +73,7 @@ class SlackServiceTest {
         List<String> receivers = Arrays.asList("C023WJKCPUM");
         AlarmMessage alarmMessage = AlarmMessage.builder()
                 .groupId(groupId)
-                .receivers(receivers)
+                .addresses(receivers)
                 .title(title)
                 .content(content)
                 .userId(userId)
@@ -83,12 +85,12 @@ class SlackServiceTest {
         Message message = new Message();
         message.setType("message");
         message.setText(alarmMessage.getContent());
-        response.setChannel(alarmMessage.getReceivers().get(0));
+        response.setChannel(alarmMessage.getAddresses().get(0));
         response.setMessage(message);
         response.setOk(true);
 
         when(client.sendAlarm(accessToken,
-                alarmMessage.getReceivers().get(0),
+                alarmMessage.getAddresses().get(0),
                 alarmMessage)
         ).thenReturn(response);
 
@@ -116,7 +118,7 @@ class SlackServiceTest {
         List<String> receivers = Arrays.asList("C023WJKCPUM");
         AlarmMessage alarmMessage = AlarmMessage.builder()
                 .groupId(groupId)
-                .receivers(receivers)
+                .addresses(receivers)
                 .title(title)
                 .content(content)
                 .userId(userId)
@@ -132,7 +134,7 @@ class SlackServiceTest {
         response.setOk(false);
 
         when(client.sendAlarm(accessToken,
-                alarmMessage.getReceivers().get(0),
+                alarmMessage.getAddresses().get(0),
                 alarmMessage)
         ).thenReturn(response);
 
@@ -159,7 +161,7 @@ class SlackServiceTest {
         List<String> receivers = Arrays.asList("IS NOT A CHANNEL ID");
         AlarmMessage alarmMessage = AlarmMessage.builder()
                 .groupId(groupId)
-                .receivers(receivers)
+                .addresses(receivers)
                 .title(title)
                 .content(content)
                 .userId(userId)
@@ -175,7 +177,7 @@ class SlackServiceTest {
         response.setOk(false);
 
         when(client.sendAlarm(accessToken,
-                alarmMessage.getReceivers().get(0),
+                alarmMessage.getAddresses().get(0),
                 alarmMessage)
         ).thenReturn(response);
 

@@ -24,7 +24,7 @@ public class SlackService {
     public void sendSlack(AlarmMessage alarmMessage) throws IOException {
         String accessToken = getAccessToken(alarmMessage.getGroupId());
 
-        for (String channelId : alarmMessage.getReceivers()) {
+        for (String channelId : alarmMessage.getAddresses()) {
             ChatPostMessageResponse response = client.sendAlarm(accessToken, channelId, alarmMessage);
 
             if (response.isOk()) {
