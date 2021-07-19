@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.4.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'jacoco'
 }
 
 group = 'com.gabia'
@@ -23,11 +24,31 @@ ext {
 }
 
 dependencies {
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // Slack API 를 사용하기 위한 SDK
+    implementation("com.slack.api:bolt:1.8.1")
+    implementation("com.slack.api:bolt-servlet:1.8.1")
+    implementation("com.slack.api:bolt-jetty:1.8.1")
+
+    // Kafka, deserialize
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    //fluentd
+    implementation "org.komamitsu:fluency-core:2.6.0"
+    implementation "org.komamitsu:fluency-fluentd:2.6.0"
+
+    // config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
+    // lombok
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -37,6 +58,40 @@ dependencyManagement {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.7"
+}
+
 test {
     useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled true
+        xml.enabled true
+        csv.enabled true
+        xml.destination file("$buildDir/jacoco/jacoco.xml")
+    }
+
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            element = 'CLASS'
+            // includes = []
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.0
+            }
+
+            excludes = ['com.gabia.slack.SlackApplication', 'com.gabia.emailservice.util.LogSender']
+        }
+    }
 }
