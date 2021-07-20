@@ -34,7 +34,7 @@ public class SlackService {
                         alarmMessage.getTraceId(),
                         "슬랙 발송 성공",
                         response.getMessage().getText());
-                logSender.send(alarmMessage.getUserId(), "slack", alarmMessage.getTraceId(), "슬랙 발송 성공");
+                logSender.sendAlarmResults("slack", alarmMessage.getTraceId(), "슬랙 발송 성공", true, channelId);
 
             } else {
                 log.error("{}: userId:{} traceId:{} massage:{} error:{}",
@@ -43,7 +43,7 @@ public class SlackService {
                         alarmMessage.getTraceId(),
                         "슬랙 발송 실패",
                         response.getError());
-                logSender.send(alarmMessage.getUserId(), "slack", alarmMessage.getTraceId(), "슬랙 발송 실패");
+                logSender.sendAlarmResults("slack", alarmMessage.getTraceId(), response.getError(), false, channelId);
             }
         }
     }
