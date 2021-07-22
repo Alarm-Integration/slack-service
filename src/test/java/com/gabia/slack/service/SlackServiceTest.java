@@ -18,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
@@ -178,6 +177,48 @@ class SlackServiceTest {
         Message message = new Message();
         message.setType("message");
         message.setText("channel_not_found");
+        response.setMessage(message);
+        response.setOk(false);
+
+        when(client.sendAlarm(accessToken,
+                alarmMessage.getAddresses().get(0),
+                alarmMessage)
+        ).thenReturn(response);
+
+        // when
+        service.sendSlack(alarmMessage);
+
+        // then
+        assertThat(memoryAppender.getSize()).isEqualTo(1);
+        assertThat(memoryAppender.contains(String.format("%s: userId:%s traceId:%s massage:%s massageId:%s",
+                "SlackService", alarmMessage.getUserId(), alarmMessage.getTraceId(), "슬랙 발송 실패", response.getError()), Level.INFO)).isFalse();
+    }
+
+    /*
+    {
+        "ok": false,
+        "error": "no_text",
+        ...
+    }
+     */
+    @Test
+    void 슬랙_알람_발송_전송할_content_없이_요청보낼시_실패() throws IOException {
+        // given
+        List<String> receivers = Arrays.asList("C023WJKCPUM");
+        AlarmMessage alarmMessage = AlarmMessage.builder()
+                .groupId(groupId)
+                .addresses(receivers)
+                .title(title)
+                .content("")
+                .userId(userId)
+                .traceId(traceId)
+                .build();
+
+        String accessToken = "xoxb-2148325514801-2142207279172-ttsneJk3GUgXqkw3dtPPK5bS";
+        ChatPostMessageResponse response = new ChatPostMessageResponse();
+        Message message = new Message();
+        message.setType("message");
+        message.setText("no_text");
         response.setMessage(message);
         response.setOk(false);
 
