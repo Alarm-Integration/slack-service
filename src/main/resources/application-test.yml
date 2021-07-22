@@ -1,0 +1,28 @@
+server:
+  port: 30010
+
+spring:
+  application:
+    name: slack-service
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    prefer-ip-address: true
+    ip-address: localhost
+
+kafka:
+  bootstrap:
+    servers: 139.150.75.238:19092,139.150.75.239:19092,139.150.75.240:19092
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /slack-service/v2/api-docs
+
+fluentd:
+  uri: 139.150.75.240
+  port: 24224

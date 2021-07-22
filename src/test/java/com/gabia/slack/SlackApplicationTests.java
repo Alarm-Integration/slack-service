@@ -5,11 +5,15 @@ import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class SlackApplicationTests {
 
     @Test
@@ -27,3 +31,4 @@ class SlackApplicationTests {
         assertThat(res.getError()).isEqualTo("invalid_auth");
     }
 }
+
