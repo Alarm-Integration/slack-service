@@ -18,7 +18,7 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
     private final String version = "V1";
-    private final String title = "Email Service API " + version;
+    private final String title = "Slack Service API " + version;
 
     @Bean
     public Docket apiV1() {
