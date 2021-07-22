@@ -5,9 +5,11 @@ import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.response.conversations.ConversationsListResponse;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 
+@ActiveProfiles("test")
 public class ChannelServiceTests {
 
     @Test

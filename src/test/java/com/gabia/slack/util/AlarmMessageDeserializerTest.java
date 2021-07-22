@@ -1,38 +1,21 @@
 package com.gabia.slack.util;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabia.slack.dto.request.AlarmMessage;
-import org.apache.kafka.common.serialization.Serializer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
 
+@ActiveProfiles("test")
 class AlarmMessageDeserializerTest {
-
-    class AlarmMessageSerializer implements Serializer<Object> {
-
-        @Override
-        public byte[] serialize(String topic, Object message) {
-            byte[] data = null;
-            ObjectMapper objectMapper = new ObjectMapper();
-            try {
-                data = objectMapper.writeValueAsString(message).getBytes();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return data;
-        }
-    }
-
-
     private Long groupId = 1L;
     private Long userId = 1L;
     private String title = "title";
     private String content = "content";
     private String traceId = "abc";
-    private List<String> receivers = Arrays.asList("C023WJKCPUM");
+    private List<String> addresses = Arrays.asList("C023WJKCPUM");
 
     private AlarmMessageSerializer alarmMessageSerializer = new AlarmMessageSerializer();
     private AlarmMessageDeserializer alarmMessageDeserializer = new AlarmMessageDeserializer();
@@ -44,7 +27,7 @@ class AlarmMessageDeserializerTest {
                 .userId(userId)
                 .groupId(groupId)
                 .traceId(traceId)
-                .addresses(receivers)
+                .addresses(addresses)
                 .title(title)
                 .content(content)
                 .build();

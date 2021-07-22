@@ -10,6 +10,13 @@ spring:
   application:
     name: slack-service
 
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /email-service/v2/api-docs
+
+
 management:
   endpoints:
     web:
