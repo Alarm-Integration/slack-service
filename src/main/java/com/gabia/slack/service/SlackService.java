@@ -4,9 +4,9 @@ import com.gabia.slack.dto.request.AlarmMessage;
 import com.gabia.slack.util.LogSender;
 import com.gabia.slack.util.SlackClient;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
+import com.slack.api.methods.response.conversations.ConversationsListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.komamitsu.fluency.fluentd.ingester.sender.FluentdSender;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +46,10 @@ public class SlackService {
                 logSender.sendAlarmResults("slack", alarmMessage.getTraceId(), response.getError(), false, channelId);
             }
         }
+    }
+
+    public ConversationsListResponse getChannels(String accessToken){
+        return client.getChannels(accessToken);
     }
 
     private String getAccessToken(Long groupId) {
